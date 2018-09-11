@@ -1,8 +1,8 @@
 pipeline{
 	agent any
 	tools { 
-        maven 'DY-MVN' 
-        jdk 'JDK-8' 
+        	maven 'DY-MVN' 
+        	jdk 'JDK-8' 
     }
 	stages {
 		stage ('Build') {
@@ -12,6 +12,7 @@ pipeline{
 			post {
 				success {
 					echo 'Now Archiving ....'
+					echo $(which mvn)					
 					archiveArtifacts artifacts: '**/target/*.war'
 				}
 			}

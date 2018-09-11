@@ -2,7 +2,7 @@ pipeline {
 	agent any
 	
 	tools {
-		mvn 'DY-MVN'
+		maven 'DY-MVN'
 		jdk 'JDK-8'
 	}
 // Always define the values in parameters then hardcoding them in the script.

@@ -1,3 +1,3 @@
-Hello, World! With Pipeline. version engy-1.0
-Deploying Code to production.
-testing.
+Hello, World! 
+
+New Pipeline with almost fully Automated setup with the help of jenkinsfile.

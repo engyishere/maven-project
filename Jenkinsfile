@@ -1,42 +1,53 @@
-pipeline{
+pipeline {
 	agent any
+	
 	tools {
-		maven 'DY-MVN'
+		mvn 'DY-MVN'
 		jdk 'JDK-8'
 	}
+// Always define the values in parameters then hardcoding them in the script.
+
+	parameters {
+		string(name: 'tomcat-dev', defaultValue: '104.27.138.149', description: 'Tomcat server for staging environment.')
+		string(name: 'tomcat-prod', defaultValue: '104.27.139.149', description: 'Tomcat server for Production environment.')
+	}
+
+// How to trigger the build. Here we are using Repository polling as a method to trigger the build against any changes in the Repo, every minute.
+	triggers {
+		pollSCM('* * * * *')
+	}
+
 	stages {
 		stage ('Build') {
 			steps {
 				sh 'mvn clean package'
-		}
-			post {
-				success {
-					sh 'echo $(which mvn)'
-					echo 'Now Archiving ....'
-					archiveArtifacts artifacts: '**/target/*.war'
-				}
-			}
-		}
-		stage ('Deploy to Staging server') {
-			steps {
-				build job: 'Maven-101'
-			}
-		}
-		stage ('Deploy-to-production') {
-			steps {
-				timeout(time:5, unit:'DAYS'){
-					input message: 'Approve the Build and Deploy to Production'					
-				}
-				build job: 'Deploy-to-prod'
 			}
 			post {
 				success {
-					echo 'Code deployed to the production'
-				}
-				failure {
-					echo 'Deployment Failed'
+					echo 'Now archiving ......'
+					archiveArtifiacts artifacts: '**/target/*.war'
 				}
 			}
 		}
-	}	
+
+// Run Multiple Deployments in parllel.
+		stage ('Deployments') {
+			parallel {
+
+// Deploying Build to staging.								
+				stage ('Deploy to Staging') {
+					steps {
+						sh "cp **/target/*.war /opt/tomcat/staging/webapps"
+					}
+				}
+
+// Deploying Build to Production.				
+				stage ('Deploy to Production') {
+					steps {
+						sh "cp **/target/*.war /opt/tomcat/prod/webapps"
+					}
+				}
+			}
+		}
+	}
 }

@@ -1,7 +1,7 @@
 pipeline {
 	agent any
 	stages {
-		stage ('Initialize') {
+		steps ('Initialize') {
 			sh '''
 				echo "PATH = ${PATH}"
 				echo "DY-MVN = ${DY-MVN}"
@@ -9,7 +9,7 @@ pipeline {
 		}
 	}
 
-		stage ('Build') {
+		steps ('Build') {
 			steps {
 				echo 'Hello World!'
 		}

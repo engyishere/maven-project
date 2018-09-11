@@ -1,19 +1,16 @@
-pipeline {
+pipeline{
 	agent any
 	stages {
-		stage ('Initialize') {
-			steps {
-				sh '''
-					echo "PATH = ${PATH}"
-					echo "DY-MVN = ${DY-MVN}"
-			    '''
-			}
-		}
-
 		stage ('Build') {
 			steps {
-				echo 'Hello World!'
+				sh 'mvn clean package'
+			}
+			post {
+				success {
+					echo 'Now Archiving ....'
+					archivingArtifcats artifacts: '**/target/*.war'
+				}
 			}
 		}
-	}
+	}	
 }

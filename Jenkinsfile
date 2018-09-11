@@ -37,14 +37,14 @@ pipeline {
 // Deploying Build to staging.								
 				stage ('Deploy to Staging') {
 					steps {
-						sh "cp **/target/*.war /opt/tomcat/staging/webapps"
+						sh "cp workspace/Fully-Automated-Pipeline/webapp/target/webapp.war /opt/tomcat/staging/webapps"
 					}
 				}
 
 // Deploying Build to Production.				
 				stage ('Deploy to Production') {
 					steps {
-						sh "cp **/target/*.war /opt/tomcat/prod/webapps"
+						sh "cp workspace/Fully-Automated-Pipeline/webapp/target/webapp.war /opt/tomcat/prod/webapps"
 					}
 				}
 			}

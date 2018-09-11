@@ -41,7 +41,7 @@ pipeline {
 					}
 				}
 
-// Deploying Build to Production.				
+// Deploying Build to Production..				
 				stage ('Deploy to Production') {
 					steps {
 						sh "cp /var/lib/jenkins/workspace/Fully-Automated-Pipeline/webapp/target/webapp.war /opt/tomcat/prod/webapps"

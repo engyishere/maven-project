@@ -11,8 +11,8 @@ pipeline{
 			}
 			post {
 				success {
-					echo 'Now Archiving ....'
-					echo $(which mvn)					
+					'echo 'Now Archiving ....'
+					sh 'echo $(which mvn)'
 					archiveArtifacts artifacts: '**/target/*.war'
 				}
 			}

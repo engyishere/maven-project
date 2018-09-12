@@ -30,7 +30,7 @@ pipeline {
 			}
 		}
 
-// Run Multiple Deployments in parllel..
+// Run Multiple Deployments in parllel...
 		stage ('Deployments') {
 			parallel {
 

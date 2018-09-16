@@ -30,21 +30,21 @@ pipeline {
 			}
 		}
 
-// Run Multiple Deployments in parllel..
+// Run Multiple Deployments in parllel...
 		stage ('Deployments') {
 			parallel {
 
 // Deploying Build to staging.								
 				stage ('Deploy to Staging') {
 					steps {
-						sh "cp /var/lib/jenkins/workspace/Fully-Automated-Pipeline/webapp/target/webapp.war /opt/tomcat/staging/webapps"
+						sh "cp **/target/*.war /opt/tomcat/staging/webapps"
 					}
 				}
 
 // Deploying Build to Production..				
 				stage ('Deploy to Production') {
 					steps {
-						sh "cp /var/lib/jenkins/workspace/Fully-Automated-Pipeline/webapp/target/webapp.war /opt/tomcat/prod/webapps"
+						sh "cp **/target/*.war /opt/tomcat/prod/webapps"
 					}
 				}
 			}
